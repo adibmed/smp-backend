@@ -5,7 +5,7 @@ namespace App\Repositories\Product;
 use App\Models\Product;
 use Illuminate\Support\Collection;
 
-class ProductRepository
+class ProductRepository implements ProductRepositoryInterface
 {
 
 
@@ -26,7 +26,7 @@ class ProductRepository
      */
     public function getAllApprovedProducts(): Collection
     {
-        return Product::all();
+        return Product::where('status', Product::APPROVED)->get();
     }
 
     /**
