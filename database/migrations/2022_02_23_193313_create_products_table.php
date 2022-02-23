@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('description')->nullable();
             $table->float('price');
             $table->string('image')->nullable();
+            $table->enum('status', ['approved', 'hold'])->default('hold');
             $table->timestamps();
         });
     }
