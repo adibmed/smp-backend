@@ -14,7 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+use App\Http\Controllers\Api\V1\AuthController;
 
+Route::group([
+    'middleware' => ['api'],
+    'prefix' => 'v1',
+    'namespace' => 'Api\V1'
+], function () {
+    Route::post('register', [AuthController::class, 'register']);
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('refresh', [AuthController::class, 'refresh']);
+});

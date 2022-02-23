@@ -4,11 +4,9 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
-use App\Repositories\Eloquent\UserRepository;
-use App\Repositories\UserRepositoryInterface;
+use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -39,7 +37,7 @@ class AuthController extends Controller
         if ($request->validated()) {
             $data = $request->all();
             $data['password'] = Hash::make($request->input('password'));
-            $user = $this->userRepository->store($data);
+            $user = $this->userRepository->createUser($data);
             if ($user) {
                 return response()->json([
                     "message" => "User registered successfully.",
@@ -50,6 +48,12 @@ class AuthController extends Controller
                     "description" => "User registration failed."
                 ], 500);
             }
+        }
+        else {
+            return response()->json([
+                "message" => "Something went wrong.",
+                "description" => "User registration failed."
+            ], 500);
         }
     }
 
