@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
 use App\Repositories\Eloquent\UserRepository;
 use App\Repositories\UserRepositoryInterface;
 use Illuminate\Http\JsonResponse;
@@ -25,6 +26,31 @@ class AuthController extends Controller
     {
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
         $this->userRepository = $userRepository;
+    }
+
+
+    /**
+     * Register a User.
+     *
+     * @return JsonResponse
+     */
+    public function register(UserRequest $request): JsonResponse
+    {
+        if ($request->validated()) {
+            $data = $request->all();
+            $data['password'] = Hash::make($request->input('password'));
+            $user = $this->userRepository->store($data);
+            if ($user) {
+                return response()->json([
+                    "message" => "User registered successfully.",
+                ]);
+            } else {
+                return response()->json([
+                    "message" => "Something went wrong.",
+                    "description" => "User registration failed."
+                ], 500);
+            }
+        }
     }
 
     /**
