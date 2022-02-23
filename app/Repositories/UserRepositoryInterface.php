@@ -2,10 +2,11 @@
 
 namespace App\Repositories;
 
-use Illuminate\Support\Collection;
-
 interface UserRepositoryInterface
 {
-    public function all(): Collection;
+    public function createUser(array $userDetails);
 
+    public function updateUser(array $newDetails);
+
+    public function deleteUser($userId);
 }
