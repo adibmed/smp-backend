@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Repositories\Eloquent;
+namespace App\Repositories\User;
 
 use App\Models\User;
 use App\Repositories\UserRepositoryInterface;
-use Illuminate\Support\Collection;
 
 class UserRepository implements UserRepositoryInterface
 {
