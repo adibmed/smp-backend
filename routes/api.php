@@ -15,7 +15,6 @@ use App\Http\Controllers\Api\V1\AuthController;
 |
 */
 
-
 Route::group([
     'middleware' => ['api'],
     'prefix' => 'v1'
