@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\ProductController;
 use App\Http\Controllers\Api\V1\AuthController;
@@ -26,7 +25,13 @@ Route::group([
     Route::post('login', [AuthController::class, 'login']);
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::get('user', [AuthController::class, 'me']);
+    Route::post('logout', [AuthController::class, 'logout']);
 
     // Products
-    Route::resource('product', ProductController::class, ['except'=>'create', 'edit']);
+    Route::group(['middleware' => 'role:approver'], function () {
+        Route::get('product/approved', [ProductController::class, 'approved']);
+        Route::post('product/{id}/approve', [ProductController::class, 'approve']);
+    });
+    Route::post('product', [ProductController::class, 'store'])->middleware('role:submitter');
+    Route::get('product', [ProductController::class, 'index']);
 });

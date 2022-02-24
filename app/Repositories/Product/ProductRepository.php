@@ -29,6 +29,11 @@ class ProductRepository implements ProductRepositoryInterface
         return Product::where('status', Product::APPROVED)->get();
     }
 
+    public function approveProduct($productId): Product
+    {
+        return $this->updateProduct($productId, ['status' => Product::APPROVED]);
+    }
+
     /**
      * Create a new Product
      *
