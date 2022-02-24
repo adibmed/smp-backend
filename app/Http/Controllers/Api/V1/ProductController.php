@@ -9,6 +9,7 @@ use App\Repositories\Product\ProductRepository;
 use App\Repositories\Product\ProductRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class ProductController extends Controller
 {
@@ -33,7 +34,7 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Support\Collection
      */
-    public function index()
+    public function index():Collection
     {
         return $this->productRepository->getAllProducts();
     }
