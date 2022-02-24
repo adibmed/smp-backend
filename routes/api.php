@@ -28,10 +28,10 @@ Route::group([
     Route::post('logout', [AuthController::class, 'logout']);
 
     // Products
+    Route::get('product', [ProductController::class, 'index']);
     Route::group(['middleware' => 'role:approver'], function () {
         Route::get('product/approved', [ProductController::class, 'approved']);
         Route::post('product/{id}/approve', [ProductController::class, 'approve']);
     });
     Route::post('product', [ProductController::class, 'store'])->middleware('role:submitter');
-    Route::get('product', [ProductController::class, 'index']);
 });

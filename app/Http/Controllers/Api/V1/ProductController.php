@@ -43,16 +43,24 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Support\Collection
      */
-    public function approved()
+    public function approved(): Collection
     {
         return $this->productRepository->getAllApprovedProducts();
     }
 
+    /**
+     * Approve a product
+     *
+     * @param $productId
+     * @return JsonResponse
+     */
     public function approve($productId): JsonResponse
     {
-        if ($this->productRepository->approveProduct($productId)) return response()->json([
-            "message" => "Product approved successfully",
-        ], 200);
+        if ($this->productRepository->approveProduct($productId)) {
+            return response()->json([
+                "message" => "Product approved successfully",
+            ], 200);
+        }
         else {
             return response()->json([
                 "message" => "Something went wrong.",
