@@ -27,6 +27,10 @@ class ProductController extends Controller
 
     public function index()
     {
+        return $this->productRepository->getAllProducts();
+    }
+
+    public function approved() {
         return $this->productRepository->getAllApprovedProducts();
     }
 
