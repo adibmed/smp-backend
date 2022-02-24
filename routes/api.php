@@ -25,6 +25,7 @@ Route::group([
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
     Route::post('refresh', [AuthController::class, 'refresh']);
+    Route::get('user', [AuthController::class, 'me']);
 
     // Products
     Route::resource('product', ProductController::class, ['except'=>'create', 'edit']);
