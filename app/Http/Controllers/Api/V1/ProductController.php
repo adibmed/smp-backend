@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use App\Repositories\Product\ProductRepository;
 use App\Repositories\Product\ProductRepositoryInterface;
 use Illuminate\Http\Request;
@@ -24,9 +25,9 @@ class ProductController extends Controller
     }
 
 
-    public function all()
+    public function index()
     {
-
+        return $this->productRepository->getAllApprovedProducts();
     }
 
     public function store()
