@@ -4,7 +4,6 @@ namespace App\Repositories\Product;
 
 use App\Models\Product;
 use Illuminate\Support\Collection;
-use phpDocumentor\Reflection\Types\Boolean;
 
 class ProductRepository implements ProductRepositoryInterface
 {
@@ -33,9 +32,9 @@ class ProductRepository implements ProductRepositoryInterface
     /**
      * Update product status to approved
      * @param $productId
-     * @return Product
+     * @return bool
      */
-    public function approveProduct($productId): Product
+    public function approveProduct($productId): bool
     {
         return $this->updateProduct($productId, ['status' => Product::APPROVED]);
     }
@@ -53,9 +52,9 @@ class ProductRepository implements ProductRepositoryInterface
     /**
      * Update a Product details
      *
-     * @return Boolean
+     * @return bool
      */
-    public function updateProduct($productId, array $productDetails): Boolean
+    public function updateProduct($productId, array $productDetails): bool
     {
 
         return Product::whereId($productId)->update($productDetails);

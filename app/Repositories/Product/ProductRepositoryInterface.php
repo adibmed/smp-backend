@@ -6,12 +6,11 @@ use App\Models\Product;
 use Illuminate\Support\Collection;
 
 interface ProductRepositoryInterface
-{
-    /**
-     * Return a collection of Products
-     *
-     * @return Collection
-     */
+{/**
+ * Return a collection of Products
+ *
+ * @return Collection
+ */
     public function getAllProducts(): Collection;
 
     /**
@@ -20,6 +19,13 @@ interface ProductRepositoryInterface
      * @return Collection
      */
     public function getAllApprovedProducts(): Collection;
+
+    /**
+     * Update product status to approved
+     * @param $productId
+     * @return bool
+     */
+    public function approveProduct($productId): bool;
 
     /**
      * Create a new Product
@@ -31,13 +37,12 @@ interface ProductRepositoryInterface
     /**
      * Update a Product details
      *
-     * @return Product
+     * @return bool
      */
-    public function updateProduct($productId, array $productDetails): Product;
+    public function updateProduct($productId, array $productDetails): bool;
 
     /**
      * Remove a Product
-     *
      */
     public function removeProduct($productId);
 }
