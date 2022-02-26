@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
+use App\Http\Resources\UserResource;
 use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
@@ -75,13 +76,13 @@ class AuthController extends Controller
     }
 
     /**
-     * Get the authenticated User.
+     * Return authenticated user
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return UserResource
      */
-    public function me(): JsonResponse
+    public function me(): UserResource
     {
-        return response()->json(auth()->user());
+        return new UserResource(auth()->user());
     }
 
     /**
