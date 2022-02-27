@@ -26,7 +26,7 @@ class ProductRepository implements ProductRepositoryInterface
      */
     public function getAllApprovedProducts(): Collection
     {
-        return Product::where('approved', true)->get();
+        return Product::where('approved', true)->orderby('updated_at', 'ASC')->get();
     }
 
 

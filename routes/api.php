@@ -19,25 +19,34 @@ Route::group([
     'middleware' => ['api'],
     'prefix' => 'v1'
 ], function () {
-    // User authentication
+    // Guest
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::get('user', [AuthController::class, 'me']);
     Route::post('logout', [AuthController::class, 'logout']);
 
-    Route::group(['middleware' => 'role:approver'], function () {
-        // Route::get('product/approved', [ProductController::class, 'getApproved']);
+    // Reviewer
+    Route::group(['middleware' => 'role:reviewer'], function () {
         Route::put('product/{product}', [ProductController::class, 'update']);
+        Route::get('product/approved', [ProductController::class, 'getApproved']);
+        // Products
+        Route::get('product', [ProductController::class, 'index']);
+        Route::get('product/{id}', [ProductController::class, 'show']);
+        Route::put('product', [ProductController::class, 'update']);
+    });
+
+
+    // Submitter
+    Route::group(['middleware' => 'role:submitter'], function () {
+        Route::post('product', [ProductController::class, 'store']);
+    });
+
+
+    // Client
+    Route::group(['middleware' => 'role:client'], function () {
         Route::get('product/approved', [ProductController::class, 'getApproved']);
     });
 
-    // Products
-    Route::get('product', [ProductController::class, 'index']);
-    Route::get('product/{id}', [ProductController::class, 'show']);
-    Route::put('product', [ProductController::class, 'update']);
-
-
-    Route::post('product', [ProductController::class, 'store'])->middleware('role:submitter');
 });
 
