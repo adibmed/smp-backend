@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Role;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -16,13 +17,13 @@ class RoleMiddleware
      */
     public function handle(Request $request, Closure $next, String $role)
     {
-        if($role == 'submitter' && auth()->user()->role_id  != 1) {
+        if($role == 'submitter' && auth('api')->user()->role->name  != Role::IS_SUBMITTER) {
             abort(403);
         }
-        if($role == 'reviewer' && auth()->user()->role_id != 2) {
+        if($role == 'reviewer' && auth('api')->user()->role->name != Role::IS_REVIEWER) {
             abort(403);
         }
-        if($role == "client" && auth()->user()->role_id != 3) {
+        if($role == "client" && auth('api')->user()->role->name != Role::IS_CLIENT) {
             abort(403);
         }
         return $next($request);

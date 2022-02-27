@@ -24,7 +24,7 @@ class ProductController extends Controller
      */
     public function __construct(ProductRepositoryInterface $productRepository)
     {
-        // $this->middleware('auth:api');
+        $this->middleware('auth:api');
         $this->productRepository = $productRepository;
     }
 
@@ -34,7 +34,7 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Support\Collection
      */
-    public function index():Collection
+    public function index(): Collection
     {
         return $this->productRepository->getAllProducts();
     }
@@ -49,26 +49,6 @@ class ProductController extends Controller
         return $this->productRepository->getAllApprovedProducts();
     }
 
-    /**
-     * Approve a product
-     *
-     * @param $productId
-     * @return JsonResponse
-     */
-    public function approve($productId): JsonResponse
-    {
-        if ($this->productRepository->approveProduct($productId)) {
-            return response()->json([
-                "message" => "Product approved successfully",
-            ], 200);
-        }
-        else {
-            return response()->json([
-                "message" => "Something went wrong.",
-                "description" => "Product approving failed."
-            ], 500);
-        }
-    }
 
     /**
      * Find a product by id
@@ -102,19 +82,17 @@ class ProductController extends Controller
 
 
     /**
-     * Update a product
-     *
-     * @param Product $product
+     * Update Product
+     * @param Request $request
      * @return JsonResponse
      */
-    public function update(ProductRequest $productRequest):JsonResponse
+    public function update(Request $request): JsonResponse
     {
-        if ($this->productRepository->updateProduct($productRequest->input('id'), $productRequest->all())) {
+        if ($this->productRepository->updateProduct($request->input('id'), $request->all())) {
             return response()->json([
                 "message" => "Product approved successfully",
             ], 200);
-        }
-        else {
+        } else {
             return response()->json([
                 "message" => "Something went wrong.",
                 "description" => "Product approving failed."

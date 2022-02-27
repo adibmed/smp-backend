@@ -12,6 +12,9 @@ class Role extends Model
 
     protected $fillable = ['name'];
 
+    public const IS_SUBMITTER = "submitter";
+    public const IS_REVIEWER = "reviewer";
+    public const IS_CLIENT = "client";
 
     /**
      * @return HasMany
