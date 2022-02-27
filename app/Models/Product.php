@@ -9,8 +9,6 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'price', 'image', 'status'];
+    protected $fillable = ['name', 'description', 'price', 'image', 'approved'];
 
-    public const APPROVED = 'approved';
-    public const HOLD = 'hold';
 }

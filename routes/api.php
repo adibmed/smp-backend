@@ -26,11 +26,18 @@ Route::group([
     Route::get('user', [AuthController::class, 'me']);
     Route::post('logout', [AuthController::class, 'logout']);
 
+    Route::group(['middleware' => 'role:approver'], function () {
+        // Route::get('product/approved', [ProductController::class, 'getApproved']);
+        Route::put('product/{product}', [ProductController::class, 'update']);
+        Route::get('product/approved', [ProductController::class, 'getApproved']);
+    });
+
     // Products
     Route::get('product', [ProductController::class, 'index']);
-    Route::group(['middleware' => 'role:approver'], function () {
-        Route::get('product/approved', [ProductController::class, 'approved']);
-        Route::post('product/{id}/approve', [ProductController::class, 'approve']);
-    });
+    Route::get('product/{id}', [ProductController::class, 'show']);
+    Route::put('product', [ProductController::class, 'update']);
+
+
     Route::post('product', [ProductController::class, 'store'])->middleware('role:submitter');
 });
+

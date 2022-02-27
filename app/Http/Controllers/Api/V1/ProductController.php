@@ -24,7 +24,7 @@ class ProductController extends Controller
      */
     public function __construct(ProductRepositoryInterface $productRepository)
     {
-        $this->middleware('auth:api');
+        // $this->middleware('auth:api');
         $this->productRepository = $productRepository;
     }
 
@@ -44,7 +44,7 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Support\Collection
      */
-    public function approved(): Collection
+    public function getApproved(): Collection
     {
         return $this->productRepository->getAllApprovedProducts();
     }
@@ -71,6 +71,17 @@ class ProductController extends Controller
     }
 
     /**
+     * Find a product by id
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function show($id)
+    {
+        return $this->productRepository->findProductById($id);
+    }
+
+    /**
      * Store a product
      *
      * @return JsonResponse
@@ -89,12 +100,26 @@ class ProductController extends Controller
         }
     }
 
+
     /**
      * Update a product
+     *
+     * @param Product $product
+     * @return JsonResponse
      */
-    public function udpate()
+    public function update(ProductRequest $productRequest):JsonResponse
     {
-
+        if ($this->productRepository->updateProduct($productRequest->input('id'), $productRequest->all())) {
+            return response()->json([
+                "message" => "Product approved successfully",
+            ], 200);
+        }
+        else {
+            return response()->json([
+                "message" => "Something went wrong.",
+                "description" => "Product approving failed."
+            ], 500);
+        }
     }
 
     /**

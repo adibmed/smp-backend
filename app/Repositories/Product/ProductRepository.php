@@ -26,18 +26,9 @@ class ProductRepository implements ProductRepositoryInterface
      */
     public function getAllApprovedProducts(): Collection
     {
-        return Product::where('status', Product::APPROVED)->get();
+        return Product::where('approved', true)->get();
     }
 
-    /**
-     * Update product status to approved
-     * @param $productId
-     * @return bool
-     */
-    public function approveProduct($productId): bool
-    {
-        return $this->updateProduct($productId, ['status' => Product::APPROVED]);
-    }
 
     /**
      * Create a new Product
@@ -50,14 +41,24 @@ class ProductRepository implements ProductRepositoryInterface
     }
 
     /**
+     * Find a product by id
+     *
+     * @param $id
+     * @return Product
+     */
+    public function findProductById($id): Product
+    {
+        return Product::find($id);
+    }
+
+    /**
      * Update a Product details
      *
      * @return bool
      */
     public function updateProduct($productId, array $productDetails): bool
     {
-
-        return Product::whereId($productId)->update($productDetails);
+        return Product::find($productId)->update($productDetails);
     }
 
     /**

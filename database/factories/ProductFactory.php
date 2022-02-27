@@ -15,10 +15,10 @@ class ProductFactory extends Factory
     {
         return [
             'name'=>$this->faker->name,
-            'description'=>$this->faker->paragraph(3),
+            'description'=>$this->faker->paragraph(2),
             'price'=>$this->faker->randomFloat(2, 1, 100),
             'image'=>$this->faker->imageUrl,
-            'status'=>$this->faker->randomElement(['approved', 'hold'])
+            'approved'=>$this->faker->boolean()
         ];
     }
 }
