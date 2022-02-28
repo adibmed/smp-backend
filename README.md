@@ -1,6 +1,6 @@
 ### Simple Back-End Powering Authentication & Product CRUD API.
 
-## Routes Overview
+### Routes Overview
 
 ![](https://raw.githubusercontent.com/adibemohamed/smp-backend/main/presses/routes.png)
 
