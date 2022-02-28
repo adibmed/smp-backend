@@ -15,6 +15,10 @@ use App\Http\Controllers\Api\V1\AuthController;
 |
 */
 
+Route::post('v1/users', function () {
+    return \App\Models\User::all();
+});
+
 Route::group([
     'middleware' => ['api'],
     'prefix' => 'v1'
